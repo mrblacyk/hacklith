@@ -28,6 +28,7 @@ In the former you need to fill the information about your machine. Ansible needs
 You can either run the ansible playbook from the other machine or directly from the Ubuntu.
 
 ```bash
+cd ansible
 ansible-playbook --inventory inventory site.yml
 ```
 
