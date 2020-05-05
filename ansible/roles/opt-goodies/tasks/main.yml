@@ -1,0 +1,9 @@
+- name: Clone SecLists
+  git:
+    repo: https://github.com/danielmiessler/SecLists.git
+    dest: /opt/SecLists
+
+- name: Clone Ebowla
+  git:
+    repo: https://github.com/Genetic-Malware/Ebowla
+    dest: /opt/Ebowla

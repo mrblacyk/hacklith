@@ -1,0 +1,91 @@
+- name: Install Gobuster
+  apt:
+    name: gobuster
+    state: present
+    update_cache: yes
+
+- name: Install Firefox
+  apt:
+    name: firefox
+    state: present
+    update_cache: yes
+
+- name: Install nmap
+  apt:
+    name: nmap
+    state: present
+    update_cache: yes
+
+- name: Install docker
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - docker
+    - docker.io
+    - docker-compose
+
+- name: Disable Docker autostart
+  systemd:
+    name: docker
+    enabled: no
+    state: stopped
+
+- name: Add docker group
+  group:
+    name: docker
+  ignore_errors: yes
+
+- name: Add user to docker group
+  user:
+    name: "{{ user }}"
+    groups: docker
+    append: yes
+  ignore_errors: yes
+
+- name: Install netcat
+  apt:
+    name: ncat
+    state: present
+    update_cache: yes
+
+- name: Install zsh
+  apt:
+    name: zsh
+    state: present
+
+- name: Clone oh-my-zsh
+  become: no
+  tags: zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: "~/.oh-my-zsh"
+
+- name: Create new zshrc
+  become: no
+  tags: zsh
+  copy:
+    src: ~/.oh-my-zsh/templates/zshrc.zsh-template
+    dest: ~/.zshrc
+    remote_src: yes
+
+- name: Set up proper zsh theme
+  become: no
+  tags: zsh
+  lineinfile:
+    line: 'ZSH_THEME="ys"'
+    path: ~/.zshrc
+    regexp: '^ZSH_THEME.*'
+
+- name: Change default shell to ZSH (reboot needed)
+  tags: zsh
+  shell:
+    cmd: "chsh -s /usr/bin/zsh {{ user }}"
+
+- name: Add shared folders mounting alias to zshrc
+  tags: ms
+  become: no
+  lineinfile:
+    line: "alias ms='sudo umount /mnt/hgfs/ &>/dev/null; sudo vmhgfs-fuse .host:/ /mnt/hgfs/ -o allow_other -o uid=1000 2>/dev/null'"
+    path: ~/.zshrc

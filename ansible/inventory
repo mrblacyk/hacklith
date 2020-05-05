@@ -1,0 +1,9 @@
+[hacklith:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+ansible_ssh_pass=hack4me
+ansible_sudo_pass=hack4me
+ansible_python_interpreter=/usr/bin/python3
+
+[hacklith]
+127.0.0.1

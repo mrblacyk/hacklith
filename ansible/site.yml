@@ -1,0 +1,3 @@
+---
+- import_playbook: prepare-os.yml
+- import_playbook: hackingtools.yml

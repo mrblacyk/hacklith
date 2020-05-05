@@ -1,0 +1,35 @@
+- name: Prepare environment - update cache
+  raw: apt-get update -y
+
+- name: Prepare environment - install ansible required apps
+  raw: apt-get install -y python3 python3-apt --no-install-recommends 
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Add Regolith PPA
+  apt_repository:
+    repo: 'ppa:regolith-linux/release'
+    state: present
+    validate_certs: no
+
+- name: Install Regolith
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - regolith-desktop
+    - i3xrocks-net-traffic
+    - i3xrocks-cpu-usage
+    - i3xrocks-time
+
+- name: Instal VMware Open Tools
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - open-vm-tools
+    - open-vm-tools-desktop
