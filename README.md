@@ -2,6 +2,8 @@
 
 I present you Hacking + Relogith made possible with <3
 
+![](hacklith.png)
+
 4 letters from the first word, 4 (chosen) letters from the second word. Full symmetry achieved. Everyone likes symmetry.
 
 Sounds cliché but I like it.
