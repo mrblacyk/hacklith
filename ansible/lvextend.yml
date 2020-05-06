@@ -1,0 +1,11 @@
+- hosts: all
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Extend the logical volume
+      when: lvextend | bool
+      lvol:
+        vg: "{{ vg_name }}"
+        lv: "{{ lv_name }}"
+        size: +100%FREE
+        resizefs: true

@@ -3,6 +3,15 @@
   gather_facts: no
   become: yes
   roles:
-    - basic-tools
+    # - basic-tools
     - opt-goodies
     - metasploit-framework
+- hosts: all
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: "Chown {{ user }}:{{ user }} all files in /opt"
+      file:
+        path: /opt
+        recurse: yes
+        owner: "{{ user }}"

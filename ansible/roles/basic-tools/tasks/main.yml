@@ -89,3 +89,57 @@
   lineinfile:
     line: "alias ms='sudo umount /mnt/hgfs/ &>/dev/null; sudo vmhgfs-fuse .host:/ /mnt/hgfs/ -o allow_other -o uid=1000 2>/dev/null'"
     path: ~/.zshrc
+
+- name: Install openvpn
+  tags: openvpn
+  apt:
+    name: openvpn
+    state: present
+    update_cache: yes
+
+- name: Install sublime 3
+  tags: subl
+  shell:
+    cmd: "{{ item }}"
+  with_items:
+    - wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+    - echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+    - apt-get update -y
+    - apt-get install sublime-text
+
+- name: Download Burp Suite Community Edition installator
+  get_url:
+    url: https://portswigger.net/burp/releases/download?product=community&version=2020.4&type=Linux
+    dest: /root/burp.sh
+
+- name: Chmod 755 Burp Suite Community Edition installator
+  file:
+    path: /root/burp.sh
+    mode: 0755
+
+- name: Install Burp Suite Community Edition
+  shell: /root/burp.sh -q
+
+- name: Remove  Burp Suite Community Edition installer
+  file:
+    path: /root/burp.sh
+    state: absent
+
+
+- name: Clone exploitdb (searchsploit)
+  git:
+    repo: https://github.com/offensive-security/exploitdb.git
+    dest: /opt/exploit-database
+
+- name: Link searchsploit
+  file:
+    path: /usr/local/bin/searchsploit
+    src: /opt/exploit-database/searchsploit
+    state: link
+    force: yes
+
+- name: Copy searchsploit_rc
+  copy:
+    dest: ~/.searchsploit_rc
+    src: /opt/exploit-database/.searchsploit_rc
+    remote_src: yes

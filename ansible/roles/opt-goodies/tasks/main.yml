@@ -3,6 +3,12 @@
     repo: https://github.com/danielmiessler/SecLists.git
     dest: /opt/SecLists
 
+- name: Unpack rockyou.txt from SecLists
+  unarchive:
+    src: /opt/SecLists/Passwords/Leaked-Databases/rockyou.txt.tar.gz
+    dest: /opt/SecLists/Passwords/Leaked-Databases
+    remote_src: yes
+
 - name: Clone Ebowla
   git:
     repo: https://github.com/Genetic-Malware/Ebowla

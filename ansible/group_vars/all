@@ -1,0 +1,4 @@
+user: ubuntu
+lvextend: false
+vg_name: ubuntu-vg
+lv_name: ubuntu-lv

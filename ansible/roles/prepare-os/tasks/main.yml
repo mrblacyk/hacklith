@@ -9,10 +9,13 @@
     update_cache: yes
 
 - name: Add Regolith PPA
-  apt_repository:
-    repo: 'ppa:regolith-linux/release'
-    state: present
-    validate_certs: no
+  # Errors out for some reason
+  # apt_repository:
+  #   repo: 'ppa:regolith-linux/release'
+  #   state: present
+  #   validate_certs: no
+  shell: add-apt-repository 'ppa:regolith-linux/release' -y
+
 
 - name: Install Regolith
   apt:

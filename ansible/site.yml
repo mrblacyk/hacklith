@@ -1,3 +1,4 @@
 ---
+- import_playbook: lvextend.yml
 - import_playbook: prepare-os.yml
 - import_playbook: hackingtools.yml
